@@ -55,24 +55,24 @@ class TeamsNotifier:
                                 "type": "TextBlock",
                                 "text": "Daily Quote - By Nikoloz Aneli",
                                 "size": "Large",
-                                "weight": "Bolder"
+                                "weight": "Bolder",
                             },
                             {
                                 "type": "TextBlock",
                                 "text": quote,
-                                "wrap": True
+                                "wrap": True,
                             },
                             {
                                 "type": "TextBlock",
                                 "text": f"-{author}",
                                 "wrap": True,
                                 "size": "Medium",
-                                "spacing": "Medium"
+                                "spacing": "Medium",
                             },
                             {
                                 "type": "Image",
                                 "url": image_url,
-                                "size": "Stretch"
+                                "size": "Stretch",
                             },
                         ],
                     },
