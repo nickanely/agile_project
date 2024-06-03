@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 HEADERS = {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
 }
  
 
@@ -73,11 +73,11 @@ class TeamsNotifier:
                                 "type": "Image",
                                 "url": image_url,
                                 "size": "Stretch"
-                            }
-                        ]
-                    }
-                }
-            ]
+                            },
+                        ],
+                    },
+                },
+            ],
         }
 
         try:
