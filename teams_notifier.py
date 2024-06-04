@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class TeamsNotifier:
     HEADERS = {
-    "Content-Type": "application/json",
+        "Content-Type": "application/json",
     }
 
     def __init__(self, webhook_url: str):
