@@ -1,17 +1,17 @@
 import logging
-import requests
-
 from typing import Any, Dict
+
+import requests
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-HEADERS = {
-    "Content-Type": "application/json",
-}
  
 
 class TeamsNotifier:
+    HEADERS = {
+    "Content-Type": "application/json",
+    }
+
     def __init__(self, webhook_url: str):
         """
         Initializes the TeamsNotifier with a webhook URL.
@@ -26,7 +26,7 @@ class TeamsNotifier:
         """
         try:
             payload = {"text": message}
-            response = requests.post(self.webhook_url, headers=HEADERS, json=payload)
+            response = requests.post(self.webhook_url, headers=self.HEADERS, json=payload)
             response.raise_for_status()
             logger.info("Message successfully sent to Teams.")
         except requests.RequestException as e:
@@ -81,7 +81,7 @@ class TeamsNotifier:
         }
 
         try:
-            response = requests.post(self.webhook_url, headers=HEADERS, json=message_data)
+            response = requests.post(self.webhook_url, headers=self.HEADERS, json=message_data)
             response.raise_for_status()
             logger.info(f"Message sent successfully. Code: {response.status_code}")
         except requests.RequestException as e:

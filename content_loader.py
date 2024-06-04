@@ -1,10 +1,8 @@
 import logging
-import requests
-
 from abc import ABC, abstractmethod
 from typing import Any, Tuple
 
-import credentials
+import requests
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -19,13 +17,8 @@ class ContentLoader(ABC):
         raise NotImplementedError("Subclasses must implement this method")
 
 
-class ContentLoadError(Exception):
-    def __init__(self, message: str):
-        """
-        Initializes the ContentLoadError with an error message.
-        :param message: The error message.
-        """
-        super().__init__(message)
+class ContentLoadException(Exception):
+    pass
 
 
 class QuoteLoader(ContentLoader):
@@ -49,15 +42,15 @@ class QuoteLoader(ContentLoader):
             quote = data.get("content")
             author = data.get("author")
             if quote is None or author is None:
-                raise ContentLoadError("Incomplete data received.")
+                raise ContentLoadException("Incomplete data received.")
             logger.info("Successfully loaded quote.")
             return quote, author
         except requests.RequestException as e:
             logger.error(f"Error loading quote: {e}")
-            raise ContentLoadError(f"Error loading quote: {e}")
+            raise ContentLoadException(f"Error loading quote: {e}")
         except ValueError as e:
             logger.error(f"Error parsing JSON response: {e}")
-            raise ContentLoadError(f"Error parsing JSON response: {e}")
+            raise ContentLoadException(f"Error parsing JSON response: {e}")
 
 
 class ImageLoader(ContentLoader):
@@ -82,4 +75,4 @@ class ImageLoader(ContentLoader):
             return image_url
         except requests.RequestException as e:
             logger.error(f"Error loading image URL: {e}")
-            raise ContentLoadError(f"Error loading image URL: {e}")
+            raise ContentLoadException(f"Error loading image URL: {e}")

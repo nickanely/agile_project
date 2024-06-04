@@ -2,7 +2,6 @@ import logging
 
 from content_loader import QuoteLoader, ImageLoader, ContentLoadError
 from teams_notifier import TeamsNotifier
-
 import credentials
 
 logging.basicConfig(level=logging.INFO)
