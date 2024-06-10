@@ -1,6 +1,6 @@
 import logging
 
-from content_loader import QuoteLoader, ImageLoader, ContentLoadError
+from content_loader import QuoteLoader, ImageLoader, ContentLoadException
 from teams_notifier import TeamsNotifier
 import credentials
 
@@ -20,7 +20,7 @@ def main() -> None:
         quote, author = quote_loader.load()
         image_url = image_loader.load()
         notifier.send_quote_with_image(quote, author, image_url)
-    except ContentLoadError as e:
+    except ContentLoadException as e:
         logger.error(f"Error in loading quote and image: {e}")
     except Exception as e:
         logger.error(f"Error: {e}")

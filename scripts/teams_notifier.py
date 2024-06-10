@@ -53,7 +53,7 @@ class TeamsNotifier:
                         "body": [
                             {
                                 "type": "TextBlock",
-                                "text": "Daily Quote - By Nikoloz Aneli",
+                                "text": "Daily Quote",
                                 "size": "Large",
                                 "weight": "Bolder",
                             },

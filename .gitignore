@@ -162,5 +162,5 @@ cython_debug/
 #.idea/
 
 
-credentials.py
+scripts/credentials.py
 
