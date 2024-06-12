@@ -10,7 +10,7 @@ with DAG(
         dag_id="agile_project_MSI_4",
         description="A simple DAG to send a toad image with a quote on Wednesdays",
         start_date=pendulum.today(),
-        # schedule_interval="0 0 * * 3",
+        schedule_interval="0 0 * * 3",
         catchup=False,
 ) as dag:
     start = EmptyOperator(
