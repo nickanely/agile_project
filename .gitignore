@@ -166,8 +166,10 @@ scripts
 plugins
 Dockerfile
 docker-compose.yml
+
 logs
 data
+
 
 
 
