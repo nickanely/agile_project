@@ -162,5 +162,13 @@ cython_debug/
 #.idea/
 
 
-scripts/credentials.py
+scripts
+plugins
+Dockerfile
+docker-compose.yml
+logs
+data
+
+
+
 
