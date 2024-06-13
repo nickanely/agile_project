@@ -1,3 +1,4 @@
+import base64
 import logging
 
 import requests
@@ -7,10 +8,13 @@ logger = logging.getLogger(__name__)
 
 
 def send_to_teams(**kwargs):
-    quote = kwargs["ti"].xcom_pull(key="quote")
-    author = kwargs["ti"].xcom_pull(key="author")
-    image_url = kwargs["ti"].xcom_pull(key="image_url")
+    image_local_path = kwargs["ti"].xcom_pull(key="image_local_path")
     webhook_url = Variable.get("webhook_url")
+
+    with open(image_local_path, "rb") as image_file:
+        image_data = image_file.read()
+
+    image_base64 = base64.b64encode(image_data).decode("utf-8")
 
     message_data = {
         "type": "message",
@@ -30,20 +34,8 @@ def send_to_teams(**kwargs):
                             "weight": "Bolder",
                         },
                         {
-                            "type": "TextBlock",
-                            "text": quote,
-                            "wrap": True,
-                        },
-                        {
-                            "type": "TextBlock",
-                            "text": f"-{author}",
-                            "wrap": True,
-                            "size": "Medium",
-                            "spacing": "Medium",
-                        },
-                        {
                             "type": "Image",
-                            "url": image_url,
+                            "url": f"data:image/jpeg;base64,{image_base64}",
                             "size": "Stretch",
                         },
                     ],

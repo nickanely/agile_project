@@ -2,11 +2,11 @@ import pendulum
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.python import PythonOperator
-from quote_loader import load_quote
+
 from image_loader import load_image
+from quote_loader import load_quote
 from teams_notifier import send_to_teams
 
-# Define the DAG
 with DAG(
         dag_id="agile_project_MSI_2",
         description="A simple DAG to send daily quote with image to Teams",
