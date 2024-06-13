@@ -1,6 +1,11 @@
 import logging
+import os
+import textwrap
+import uuid
+from io import BytesIO
 
 import requests
+from PIL import Image, ImageDraw
 from airflow.exceptions import AirflowException
 from airflow.providers.http.hooks.http import HttpHook
 
@@ -22,3 +27,32 @@ def load_image(**kwargs):
     except requests.exceptions.RequestException as e:
         logger.error(f"Request exception: {e}")
         raise AirflowException(f"Failed to load image: {e}")
+
+    response = requests.get(image_url)
+    if response.status_code != 200:
+        raise AirflowException(f"Failed to download image: {response.status_code}")
+
+    image = Image.open(BytesIO(response.content))
+
+    quote = kwargs["ti"].xcom_pull(task_ids="load_quote", key="quote")
+    author = kwargs["ti"].xcom_pull(task_ids="load_quote", key="author")
+
+    draw = ImageDraw.Draw(image)
+
+    text = f"{quote}\n- {author}"
+    text_color = "black"
+
+    wrapped_text = textwrap.fill(text, width=40)
+    text_position = (10, 10)
+    draw.multiline_text(text_position, wrapped_text, fill=text_color)
+
+    image_filename = f"random_image_{uuid.uuid4().hex}.jpg"
+    image_dir = "agile_project/data"
+    image_path = os.path.join(image_dir, image_filename)
+
+    os.makedirs(image_dir, exist_ok=True)
+
+    image.save(image_path)
+
+    kwargs["ti"].xcom_push(key="image_local_path", value=image_path)
+    logger.info("Successfully loaded and saved image with quote locally.")
